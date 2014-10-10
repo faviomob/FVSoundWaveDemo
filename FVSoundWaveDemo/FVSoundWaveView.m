@@ -137,7 +137,7 @@
             val = 1.0; // draw dots instead emptyness
         CGContextMoveToPoint(context, i * (_drawSpaces ? 2 : 1), channelCenterY - val / 2.0);
         CGContextAddLineToPoint(context, i * (_drawSpaces ? 2 : 1), channelCenterY + val / 2.0);
-        CGContextSetStrokeColorWithColor(context, waveColor);
+        CGContextSetStrokeColorWithColor(context, [self getColor].CGColor/*waveColor*/);
         CGContextStrokePath(context);
     }
     
@@ -319,6 +319,14 @@
     
     _progressImageView.left = _waveImageView.left;
     _progressImageView.width = _waveImageView.width * progress;
+}
+-(UIColor*)getColor
+{
+    CGFloat hue = ( arc4random() % 256 / 256.0 );  //  0.0 to 1.0
+    CGFloat saturation = ( arc4random() % 128 / 256.0 ) + 0.5;  //  0.5 to 1.0, away from white
+    CGFloat brightness = ( arc4random() % 128 / 256.0 ) + 0.5;  //  0.5 to 1.0, away from black
+    UIColor *color = [UIColor colorWithHue:hue saturation:saturation brightness:brightness alpha:1];
+    return color;
 }
 
 @end
